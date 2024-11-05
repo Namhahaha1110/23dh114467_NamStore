@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _23dh114467_NamStore.Models;
+using _23dh114467_NamStore.Models.ViewModel;
+using PagedList;
+using PagedList.Mvc;
 
 namespace _23dh114467_NamStore.Areas.Admin.Controllers
 {
@@ -15,10 +19,58 @@ namespace _23dh114467_NamStore.Areas.Admin.Controllers
         private MyStoreEntities db = new MyStoreEntities();
 
         // GET: Admin/Products
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm,decimal? minPrice,decimal?maxPrice,string sortOrder,int? page)
         {
-            var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            var model=new ProductSearchVM();
+            var products=db.Products.AsQueryable();
+            //Tìm kiếm dựa trên từ khóa
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                model.SearchTerm=searchTerm;
+                //Tìm kiếm sản phẩm dựa trên từ khóa
+                products=products.Where(p =>
+                p.ProductName.Contains(searchTerm)||
+                p.ProductDescription.Contains(searchTerm)||
+                p.Category.CategoryName.Contains(searchTerm));
+            }
+            //Tìm kiếm dựa trên giá tối thiểu
+            if (minPrice.HasValue)
+            {
+                products=products.Where(p =>p.ProductPrice>=minPrice.Value);
+
+            }
+            //Tìm kiếm dựa trên giá tối đa
+            if (maxPrice.HasValue)
+            {
+                products= products.Where(p =>p.ProductPrice<=maxPrice.Value);
+            }
+            //Sắp xếp dựa trên lựa chọn người dùng
+            switch (sortOrder)
+            {
+                case "name_asc":products = products.OrderBy(p => p.ProductName);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.ProductName);
+                    break;
+                case "price_asc":
+                    products = products.OrderBy(p => p.ProductPrice);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.ProductPrice);
+                    break;
+                default://Mặc định sắp xếp theo tên
+                    products = products.OrderBy(p => p.ProductName);
+                    break;
+            }
+            model.SortOrder=sortOrder;
+            //Đoạn code phân trang
+            //Lấy số trang hiện tại ( mặc định trang là 1 nếu không có giá trị )
+            int pageNumber = page ?? 1;
+            int pageSize = 2;//Số sản phẩm mỗi trang
+            //Đóng câu lệnh này, sử dụng ToPagedList để lấy danh sách đã phân trang
+            //model.Products=products.ToList();
+            model.products = products.ToPagedList(pageNumber, pageSize);
+            return View(model);
         }
 
         // GET: Admin/Products/Details/5
