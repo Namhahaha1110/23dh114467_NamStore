@@ -18,6 +18,7 @@ namespace _23dh114467_NamStore.Models
         public Product()
         {
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.ProductDetails = new HashSet<ProductDetail>();
         }
     
         public int ProductID { get; set; }
@@ -30,5 +31,7 @@ namespace _23dh114467_NamStore.Models
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductDetail> ProductDetails { get; set; }
     }
 }

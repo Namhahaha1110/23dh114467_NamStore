@@ -19,9 +19,29 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="btn-sm">
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
+                <table class="table">
+                    <tr>
+                        <th>TEN MAT HANG</th>
+                        <th>MO TA</th>
+                    </tr>
+
+                    @foreach (var pro in item.Products)
+                    {  
+                        
+                        <tr class="btn-sm">
+                            <td>
+                                @Html.DisplayFor(modelItem => pro.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => pro.ProductDescription)
+                            </td>
+                        </tr>
+                     }
+                    </table>
+               
             </td>
             <td>
                 @Html.ActionLink("Cập nhật", "Edit", new { id = item.CategoryID }, new { @class = "btn btn-primary btn-sm" })

@@ -1,5 +1,6 @@
 ﻿@model _23dh114467_NamStore.Models.ViewModel.ProductSearchVM
-    @using PagedList.Mvc
+@using PagedList.Mvc
+
 <head>
     <style>
         img {
@@ -59,22 +60,22 @@
                     </td>
                 </tr>
             }
+
         </tbody>
+
     </table>
     <!--Hiển thị phân trang-->
+    @*<div class="pagination-container">
 
-    <div class="pagination-container">
-        @Html.PagedListPager(Model.products,page => Url.Action("Index", new {page,searchTerm=Model.SearchTerm,
-   minPrice=Model.MinPrice,maxPrice=Model.MaxPrice,sortOrder=Model.SortOrder}))
-    </div>
+        @Html.PagedListPager(Model.products, page => Url.Action("Index", new { page, searchTerm = Model.SearchTerm, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice, sortOrder = Model.SortOrder }))
+    </div>*@
 }
 else
-            {
-                <p>Không tìm thấy sản phẩm phù hợp</p>
-            }
+{
+    <p>Không tìm thấy sản phẩm phù hợp</p>
+}
 <div class="form-group">
     <div class="col-md-offset-8 col-md-4">
         @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary" })
-
     </div>
 </div>

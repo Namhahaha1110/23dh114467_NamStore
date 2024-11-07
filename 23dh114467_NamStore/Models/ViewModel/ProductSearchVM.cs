@@ -25,9 +25,9 @@ namespace _23dh114467_NamStore.Models.ViewModel
         public int PageSize { get; set; } = 10; //Số sản phẩm mỗi trang
 
         //Danh sách sản phẩm đã phân trang
-        public PagedList.IPagedList<Product> products { get; set; }
+        //public PagedList.IPagedList<Product> products { get; set; }
 
         //Danh sách sp thỏa điều kiện tìm kiếm
-        //public List<Product> products { get; set; }
+        public List<Product> products { get; set; }
     }
 }
