@@ -19,9 +19,9 @@ namespace _23dh114467_NamStore.Models.ViewModel
         [Display(Name = "Phuong thuc thanh toan")]
         public string PaymentMethod { get; set; }
         [Display(Name = "Phuong thuc giao hang")]
-        public string ShippingMethod { get; set; }
+        public string DeliveryMethod { get; set; }
         [Display(Name = "Dia chi giao hang")]
-        public string ShippingAddress { get; set; }
+        public string AddressDelivery { get; set; }
         public string UserName { get; set; }
         //thuoc tinh khac
         public List<OrderDetail> OrderDetails { get; set; }

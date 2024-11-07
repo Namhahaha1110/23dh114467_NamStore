@@ -41,7 +41,7 @@ namespace _23dh114467_NamStore.Controllers
                CartItems = cart,
                TotalAmount=cart.Sum(item=>item.TotalPrice),
                OrderDate= DateTime.Now,
-               ShippingAddress= customer.CustomerAddress,
+               AddressDelivery= customer.CustomerAddress,
                CustomerId = customer.CustomerID,
                UserName=customer.Username
             };
@@ -98,8 +98,8 @@ namespace _23dh114467_NamStore.Controllers
                     TotalAmount = model.TotalAmount,
                     PaymentStatus = paymentStatus,
                     PaymentMethod = model.PaymentMethod,
-                    ShippingMethod = model.ShippingMethod,
-                    ShippingAddress = model.ShippingAddress,
+                    DeliveryMethod = model.DeliveryMethod,
+                    AddressDelivery = model.AddressDelivery,
                     OrderDetails=cart.Select(item => new OrderDetail
                     {
                         ProductID = item.ProductId,
